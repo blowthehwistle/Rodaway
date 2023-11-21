@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Database</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 15px;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>English Name</th>
+            <th>Baptism Name</th>
+            <th>Grade</th>
+            <th>Phone Number</th>
+        </tr>
+        {% for passenger in passengers %}
+        <tr>
+            <td>{{ passenger.name }}</td>
+            <td>{{ passenger.english_name }}</td>
+            <td>{{ passenger.baptism_name }}</td>
+            <td>{{ passenger.grade }}</td>
+            <td>{{ passenger.phone_number }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

@@ -4,34 +4,8 @@
     <title>비행기 예약</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 <script>
-    // 예약 완료 시 알림 팝업
-    function showReservationConfirmation() {
-    // 폼 데이터를 서버에 전송
-    fetch('/', {
-        method: 'POST',
-        body: new FormData(document.querySelector('form')),
-    })
-    .then(response => {
-        if (response.redirected) {
-            // If the response is a redirect, manually navigate to the redirected URL
-            window.location.href = response.url;
-        } else {
-            return response.json();  // Parse JSON response for non-redirect cases
-        }
-    })
-    .then(data => {
-        // 서버에서 반환한 메시지 표시
-        alert(data.message);
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-}
-
-
 </script>
 
 
@@ -60,7 +34,7 @@
     </div>
 
     <!-- 예약 폼 -->
-    <form method="POST" action="/" enctype="multipart/form-data">
+    <form id="reservation-form" method="POST" action="/" enctype="multipart/form-data"> <!-- 이미지 업로드를 위한 enctype 추가 -->
         <label for="name">이름</label>
         <input type="text" id="name" name="name" required><br>
 
@@ -76,10 +50,10 @@
         <label for="phone_number">전화번호</label>
         <input type="tel" id="phone_number" name="phone_number" required><br>
 
-        <label for="image">여권 사진 업로드</label>
-        <input type="file" id="image" name="image" accept="image/*" required><br>
+        <label for="image">여권 사진 업로드</label> <!-- 이미지 업로드 필드 레이블 추가 -->
+        <input type="file" id="image" name="image" accept="image/*" required><br> <!-- 이미지 업로드 필드 추가 -->
 
-        <input type="button" value="예약" onclick="showReservationConfirmation();">
+        <input type="submit" value="예약">
     </form>
 </body>
 </html>
