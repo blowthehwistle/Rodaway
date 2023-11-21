@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>비행기 예약</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+</head>
+<script>
+    // 예약 완료 시 알림 팝업
+    function showReservationConfirmation() {
+    // 폼 데이터를 서버에 전송
+    fetch('/', {
+        method: 'POST',
+        body: new FormData(document.querySelector('form')),
+    })
+    .then(response => {
+        if (response.redirected) {
+            // If the response is a redirect, manually navigate to the redirected URL
+            window.location.href = response.url;
+        } else {
+            return response.json();  // Parse JSON response for non-redirect cases
+        }
+    })
+    .then(data => {
+        // 서버에서 반환한 메시지 표시
+        alert(data.message);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+
+</script>
+
+
+<body>
+    <h1>R'way</h1>
+    
+    <!-- 출발지 및 도착지 선택 부분 -->
+    <div class="flight-select">
+        <div>
+            <label for="departure">출발지</label>
+            <select id="departure" name="departure">
+                <option value="풍동">풍동</option>
+            </select>
+        </div>
+        <i class="fas fa-plane"></i><!-- 비행기 아이콘 -->
+    </div>
+
+    <div class="flight-select">
+        <div>
+            <label for="destination">도착지</label>
+            <select id="destination" name="destination">
+                <option value="로다월드">로다월드</option>
+            </select>
+        </div>
+        <i class="fas fa-plane"></i><!-- 비행기 아이콘 -->
+    </div>
+
+    <!-- 예약 폼 -->
+    <form method="POST" action="/" enctype="multipart/form-data">
+        <label for="name">이름</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="english_name">영문 이름</label>
+        <input type="text" id="english_name" name="english_name"><br>
+
+        <label for="baptism_name">세례명</label>
+        <input type="text" id="baptism_name" name="baptism_name"><br>
+
+        <label for="grade">학년</label>
+        <input type="text" id="grade" name="grade"><br>
+
+        <label for="phone_number">전화번호</label>
+        <input type="tel" id="phone_number" name="phone_number" required><br>
+
+        <label for="image">여권 사진 업로드</label>
+        <input type="file" id="image" name="image" accept="image/*" required><br>
+
+        <input type="button" value="예약" onclick="showReservationConfirmation();">
+    </form>
+</body>
+</html>
